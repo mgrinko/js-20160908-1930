@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Test</title>
+  <style>
+    .js-closed ul {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -39,8 +44,6 @@
     }
 
     _createTreeDom(obj) {
-      // если нет детей, то рекурсивный вызов ничего не возвращает
-      // так что вложенный UL не будет создан
       if (this._isObjectEmpty(obj)) {
         return;
       }
@@ -50,7 +53,21 @@
       for (var key in obj) {
         var li = document.createElement('li');
 
-        li.innerHTML = key;
+        li.addEventListener('click', function(event) {
+          var title = event.target.closest('.title');
+
+          if (!title) {
+            return;
+          }
+
+          if (title.closest('li') !== event.currentTarget) {
+            return;
+          }
+
+          event.currentTarget.classList.toggle('js-closed');
+        });
+
+        li.innerHTML = `<span class="title">${key}</span>`;
 
         var childrenUl = this._createTreeDom(obj[key]);
 
@@ -72,8 +89,6 @@
       return true;
     }
   }
-
-
 
   new Tree({
     element: document.getElementById('container1'),
