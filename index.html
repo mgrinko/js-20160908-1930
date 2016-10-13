@@ -5,8 +5,83 @@
   <title>Test</title>
 </head>
 <body>
-  Hello world!
 
-  <script>alert('Hello')</script>
+<div id="container1"></div>
+<div id="container2"></div>
+<div id="container3"></div>
+
+<script>
+  var data = {
+    "Рыбы": {
+      "Форель": {},
+      "Щука": {}
+    },
+
+    "Деревья": {
+      "Хвойные": {
+        "Лиственница": {},
+        "Ель": {}
+      },
+      "Цветковые": {
+        "Берёза": {},
+        "Тополь": {}
+      }
+
+    }
+  };
+
+  class Tree {
+    constructor(options) {
+      this._el = options.element;
+      this._data = options.data;
+
+      this._el.appendChild(this._createTreeDom(this._data));
+    }
+
+    _createTreeDom(obj) {
+      // если нет детей, то рекурсивный вызов ничего не возвращает
+      // так что вложенный UL не будет создан
+      if (this._isObjectEmpty(obj)) {
+        return;
+      }
+
+      var ul = document.createElement('ul');
+
+      for (var key in obj) {
+        var li = document.createElement('li');
+
+        li.innerHTML = key;
+
+        var childrenUl = this._createTreeDom(obj[key]);
+
+        if (childrenUl) {
+          li.appendChild(childrenUl);
+        }
+
+        ul.appendChild(li);
+      }
+
+      return ul;
+    }
+
+    _isObjectEmpty(obj) {
+      for (var key in obj) {
+        return false;
+      }
+
+      return true;
+    }
+  }
+
+
+
+  new Tree({
+    element: document.getElementById('container1'),
+    data: data
+  });
+
+
+</script>
+
 </body>
 </html>
