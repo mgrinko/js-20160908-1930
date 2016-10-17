@@ -4,6 +4,12 @@
 // "Constructor" function
 function Calculator(bodyElement, displayElement) {
 
+    // TODO Test function, prints out major variables
+
+    this.test = function() {
+        console.log("_currentValue: " + this._currentValue + "\n" + "_rememberedValue: " + this._rememberedValue + "\n" + "_operator: " + this._operator);
+    };
+
 
     // TODO Define the body of the calculator
 
@@ -22,7 +28,7 @@ function Calculator(bodyElement, displayElement) {
 
     this._render = function() {
 
-        if (this._currentValue === "0" && this._operator === null && this._rememberedValue === null) {
+        if (this._currentValue === "0" && this._operator === null) {
             this.getButton("AC").innerText = "AC";
         } else {
             this.getButton("AC").innerText = "C";
@@ -64,19 +70,21 @@ function Calculator(bodyElement, displayElement) {
 
     this.clear = function() {
 
-        if (this._operator && this._rememberedValue) {
-            this._currentValue = "0"; // Clear only current value if first value and operator were already entered
-        } else if (this._operator) {
-            this._operator = null; // Clear only operator if there is no current value entered
+        if (this._rememberedValue && this._currentValue !== "0" && this._operator) {
+            this._currentValue = "0";
+        } else if (this._rememberedValue && this._currentValue === "0" && this._operator) {
+            this._operator = null;
+        } else if (this._currentValue !== "0" && this._operator) {
+            this._operator = null;
         } else {
-            this._currentValue = "0"; // Initial values
+            this._currentValue = "0";
             this._operator = null;
             this._rememberedValue = null;
         }
 
         this._render();
 
-        console.log("Inputs were reset: \n" + "_currentValue: " + this._currentValue + "\n" + "_rememberedValue: " + this._rememberedValue + "\n" + "_operator: " + this._operator);
+        this.test();
     }.bind(this);
 
     this.clear();
@@ -86,10 +94,21 @@ function Calculator(bodyElement, displayElement) {
 
     this.setCurrentValue = function(event) {
 
-        if (this._currentValue === "0") {
+        if (this._operator === null) {
+            if (this._currentValue === "0") {
+                this._currentValue = event.target.value;
+            } else {
+                this._currentValue += event.target.value;
+            }
+        } else if (this._rememberedValue === null) {
+            this._rememberedValue = this._currentValue;
             this._currentValue = event.target.value;
         } else {
-            this._currentValue += event.target.value;
+            if (this._currentValue === "0") {
+                this._currentValue = event.target.value;
+            } else {
+                this._currentValue += event.target.value;
+            }
         }
 
         this._render();
@@ -100,8 +119,19 @@ function Calculator(bodyElement, displayElement) {
     // TODO Add decimal sign
 
     this.addDecimal = function() {
-        if (this._currentValue.indexOf(".") === -1) {
-            this._currentValue += ".";
+        if (!this._operator) {
+            if (this._currentValue.indexOf(".") === -1) {
+                this._currentValue += ".";
+            }
+        } else {
+            if (!this._rememberedValue) {
+                this._rememberedValue = this._currentValue;
+                this._currentValue = "0.";
+            } else {
+                if (this._currentValue.indexOf(".") === -1) {
+                    this._currentValue += ".";
+                }
+            }
         }
         this._render();
     }.bind(this);
@@ -124,37 +154,45 @@ function Calculator(bodyElement, displayElement) {
     // TODO Set the value of the operator
 
     this.setOperator = function(event) {
+        // if (this._currentValue && this._operator && this._rememberedValue) {
+        //     this.doMath();
+        // }
+
         this._operator = event.target.value;
-        console.log(this._operator);
+
     }.bind(this);
 
 
     // TODO Do math
 
     this.doMath = function() {
+
+        var o1 = parseFloat(this._rememberedValue);
+        var o2 = parseFloat(this._currentValue);
+
         if (this._rememberedValue !== null && this._operator !== null) { // Do math only if operator and second operand are defined
             switch (this._operator) {
                 case "/":
-                    return this._currentValue / this._rememberedValue;
+                    this._currentValue = (o1 / o2).toString(10);
                     break;
                 case "*":
-                    return this._currentValue * this._rememberedValue;
+                    this._currentValue = (o1 * o2).toString(10);
                     break;
                 case "-":
-                    return this._currentValue - this._rememberedValue;
+                    this._currentValue = (o1 - o2).toString(10);
                     break;
                 case "+":
-                    return this._currentValue + this._rememberedValue;
+                    this._currentValue = (o1 + o2).toString(10);
                     break;
                 default:
                     throw new Error("Something went wrong...");
-                    return NaN;
             }
+
+            this._render();
         } else {
             throw new Error("Operator or operands are not defined")
         }
-
-    }
+    }.bind(this);
 }
 
 
@@ -169,6 +207,8 @@ calculator.getButton("/").addEventListener("click", calculator.setOperator);
 calculator.getButton("*").addEventListener("click", calculator.setOperator);
 calculator.getButton("-").addEventListener("click", calculator.setOperator);
 calculator.getButton("+").addEventListener("click", calculator.setOperator);
+
+calculator.getButton("=").addEventListener("click", calculator.doMath);
 
 calculator.getButton("0").addEventListener("click", calculator.setCurrentValue);
 calculator.getButton("1").addEventListener("click", calculator.setCurrentValue);
