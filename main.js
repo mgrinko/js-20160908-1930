@@ -11,25 +11,48 @@ function Calculator(bodyElement, displayElement) {
     this._display = displayElement;
 
 
+    // TODO Get any button by the value of its value attribute
+
+    this.getButton = function(value) {
+        return this._body.querySelector("[value='" + value + "']");
+    };
+
+
     // TODO Render display
 
     this._render = function() {
 
-        // Decrease the font size for long outputs
-        if (this._currentValue.length <= 8) {
-            this._display.style.fontSize = "45px";
+        if (this._currentValue === "0" && this._operator === null && this._rememberedValue === null) {
+            this.getButton("AC").innerText = "AC";
+        } else {
+            this.getButton("AC").innerText = "C";
         }
-        if (this._currentValue.length > 8) {
-            this._display.style.fontSize = "40px";
-        }
-        if (this._currentValue.length > 9) {
-            this._display.style.fontSize = "35px";
-        }
-        if (this._currentValue.length > 10) {
-            this._display.style.fontSize = "30px";
-        }
-        if (this._currentValue.length > 11) {
-            this._display.style.fontSize = "25px";
+
+        switch (this._currentValue.length) { // Decrease the font size for long outputs
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                this._display.style.fontSize = "45px";
+                break;
+            case 9:
+                this._display.style.fontSize = "40px";
+                break;
+            case 10:
+                this._display.style.fontSize = "35px";
+                break;
+            case 11:
+                this._display.style.fontSize = "30px";
+                break;
+            case 12:
+                this._display.style.fontSize = "25px";
+                break;
+            default:
+                this._display.style.fontSize = "20px";
         }
 
         this._display.innerText = this._currentValue;
@@ -37,26 +60,26 @@ function Calculator(bodyElement, displayElement) {
     }.bind(this);
 
 
-    // TODO Set initial values of operands and operator, use this method for AC button
+    // TODO Set initial values of operands and operator, also use this method for AC button
 
-    this.allClear = function() {
-        this._currentValue = "0";
-        this._rememberedValue = null;
-        this._operator = null;
+    this.clear = function() {
+
+        if (this._operator && this._rememberedValue) {
+            this._currentValue = "0"; // Clear only current value if first value and operator were already entered
+        } else if (this._operator) {
+            this._operator = null; // Clear only operator if there is no current value entered
+        } else {
+            this._currentValue = "0"; // Initial values
+            this._operator = null;
+            this._rememberedValue = null;
+        }
 
         this._render();
 
         console.log("Inputs were reset: \n" + "_currentValue: " + this._currentValue + "\n" + "_rememberedValue: " + this._rememberedValue + "\n" + "_operator: " + this._operator);
     }.bind(this);
 
-    this.allClear();
-
-
-    // TODO Get any button by the value of its value attribute
-
-    this.getButton = function(value) {
-        return this._body.querySelector("[value='" + value + "']");
-    };
+    this.clear();
 
 
     // TODO Set current value
@@ -81,6 +104,20 @@ function Calculator(bodyElement, displayElement) {
             this._currentValue += ".";
         }
         this._render();
+    }.bind(this);
+
+
+    // TODO Change sign of the current value
+
+    this.changeSign = function() {
+        if (this._currentValue.indexOf("-") === -1) {
+            this._currentValue = "-" + this._currentValue;
+        } else {
+            this._currentValue = this._currentValue.slice(1);
+        }
+
+        this._render();
+
     }.bind(this);
 
 
@@ -125,7 +162,8 @@ function Calculator(bodyElement, displayElement) {
 
 var calculator = new Calculator(document.querySelector(".calculator"), document.querySelector(".calculator__display"));
 
-calculator.getButton("AC").addEventListener("click", calculator.allClear);
+calculator.getButton("AC").addEventListener("click", calculator.clear);
+calculator.getButton("+/-").addEventListener("click", calculator.changeSign);
 
 calculator.getButton("/").addEventListener("click", calculator.setOperator);
 calculator.getButton("*").addEventListener("click", calculator.setOperator);
@@ -142,5 +180,6 @@ calculator.getButton("6").addEventListener("click", calculator.setCurrentValue);
 calculator.getButton("7").addEventListener("click", calculator.setCurrentValue);
 calculator.getButton("8").addEventListener("click", calculator.setCurrentValue);
 calculator.getButton("9").addEventListener("click", calculator.setCurrentValue);
+
 calculator.getButton(".").addEventListener("click", calculator.addDecimal);
 
