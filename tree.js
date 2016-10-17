@@ -2,6 +2,10 @@
 
 class Tree {
   constructor(options) {
+    var markup = document.getElementById('tree-template').innerHTML;
+
+    this._templateFunction = _.template(markup);
+
     this._el = options.element;
     this._data = options.data;
 
@@ -30,20 +34,9 @@ class Tree {
       return '';
     }
 
-    var html = `<ul class="tree__branch-content">`;
-
-    for (var key in obj) {
-      html += `
-          <li class="tree__branch">
-            <span class="tree__branch-title">${key}</span>
-            ${this._createTreeHTML(obj[key])}
-          </li>
-        `;
-    }
-
-    html += `</ul>`;
-
-    return html;
+    return this._templateFunction({
+      data: obj
+    });
   }
 
   _isObjectEmpty(obj) {

@@ -9,6 +9,7 @@
     }
   </style>
 
+  <script src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
   <script src="tree.js" defer></script>
   <script src="index.js" defer></script>
 </head>
@@ -17,6 +18,17 @@
 <div id="container1"></div>
 <div id="container2"></div>
 <div id="container3"></div>
+
+<script type="qweqweqwe" id="tree-template">
+  <ul class="tree__branch-content">
+    <% for (var key in data) { %>
+      <li class="tree__branch">
+        <span class="tree__branch-title"><%- key %></span>
+      </li>
+    <% } %>
+  </ul>
+</script>
+
 
 </body>
 </html>
