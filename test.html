@@ -1,0 +1,23 @@
+
+<button id="button">button</button>
+
+<script>
+  var btn = document.getElementById('button');
+
+  var john = {
+    type: 'User',
+    getType: function() { // #f1
+      console.log(this.type);
+    }
+  };
+
+  var getJohnsType1 = john.getType.bind(john); // #f2
+  var getJohnsType2 = john.getType.bind(john); // #f3
+
+  btn.addEventListener('click', getJohnsType);
+
+  btn.removeEventListener('click', getJohnsType);
+
+  // user clicks the button
+  // A) 'User' B) 'submit' C) nothing  D) Error
+</script>

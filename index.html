@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Test</title>
   <style>
-    .js-closed ul {
+    .tree__branch--closed .tree__branch-content {
       display: none;
     }
   </style>
@@ -55,17 +55,15 @@
     }
 
     _onBranchTitleClick(event) {
-      var title = event.target.closest('.title');
+      var title = event.target.closest('.tree__branch-title');
 
       if (!title) {
         return;
       }
 
-      if (title.closest('li') !== event.currentTarget) {
-        return;
-      }
+      var branch = title.closest('.tree__branch');
 
-      event.currentTarget.classList.toggle('js-closed');
+      branch.classList.toggle('tree__branch--closed');
     }
 
     _createTreeHTML(obj) {
