@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 242px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 300;
+}
+
+*, *::before, *::after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;;
+}
+
+.calculator {
+    margin: 15% auto auto auto;
+    width: 242px;
+    border: 1px solid #444444;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+
+.calculator__display {
+    background-color: rgba(46, 46, 46, .5);
+    -webkit-border-radius: 6px 6px 0 0;
+    -moz-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+
+    padding: 25px 25px 10px;
+    text-align: right;
+    color: white;
+    font-size: 45px;
+    line-height: 45px;
+    overflow: scroll;
+}
+
+.calculator__buttons::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.calculator__button {
+    display: block;
+    float: left;
+    min-width: 60px;
+    padding: 15px;
+    text-align: center;
+    background-color: #e0e0e0;
+    border: none;
+    font-size: 20px;
+    line-height: 20px;
+    border-top: 1px solid #717171;
+    border-right: 1px solid #717171;
+}
+
+.calculator__button:focus {
+    outline: none;
+}
+
+.calculator__button:active {
+    background-color: #bababa;
+}
+
+.calculator__button--last, .calculator__button--bottomright {
+    background-color: #f6933b;
+    border-right: none;
+    color: white;
+    font-size: 26px;
+    line-height: 26px;
+    padding: 12px;
+}
+
+.calculator__button--last:active, .calculator__button--bottomright:active {
+    background-color: #c56d36;
+}
+
+.calculator__button--bottomleftlong {
+    width: 120px;
+    -webkit-border-radius: 0 0 0 6px;
+    -moz-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+    text-align: left;
+    padding-left: 24px;
+}
+
+.calculator__button--bottomright {
+    border-right: none;
+    -webkit-border-radius: 0 0 6px 0;
+    -moz-border-radius: 0 0 6px;
+    border-radius: 0 0 6px 0;
+}
