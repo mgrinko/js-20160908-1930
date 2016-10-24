@@ -35,7 +35,8 @@ class Tree {
     }
 
     return this._templateFunction({
-      data: obj
+      data: obj,
+      createTree: this._createTreeHTML.bind(this)
     });
   }
 
