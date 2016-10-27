@@ -1,16 +1,16 @@
 'use strict';
 
-class PageController {
+class PhoneCatalogueBlockController {
   constructor(options) {
     this._el = options.element;
 
-    this._phoneCatalogue = new PhoneCatalogue({
-      element: this._el.querySelector('[data-component="phone-catalogue"]'),
-      phones: options.phones
+    this._phoneCatalogue = new ItemCatalogue({
+      element: this._el.querySelector('[data-component="item-catalogue"]'),
+      items: options.phones
     });
 
-    this._phoneViewer = new PhoneViewer({
-      element: this._el.querySelector('[data-component="phone-viewer"]'),
+    this._phoneViewer = new ItemViewer({
+      element: this._el.querySelector('[data-component="item-viewer"]'),
     });
 
 

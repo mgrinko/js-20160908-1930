@@ -156,7 +156,7 @@ const phones = [
   }
 ];
 
-new PageController({
+new PhoneCatalogueBlockController({
   element: document.body,
   phones: phones
 });

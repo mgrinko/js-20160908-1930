@@ -1,6 +1,6 @@
 'use strict';
 
-class PhoneViewer {
+class ItemViewer {
   constructor(options) {
     this._el = options.element;
 

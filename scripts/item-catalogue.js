@@ -1,14 +1,14 @@
 'use strict';
 
-class PhoneCatalogue {
+class ItemCatalogue {
   constructor(options) {
     this._el = options.element;
-    this._phones = options.phones;
+    this._items = options.items;
 
-    this._template = document.getElementById('phone-catalogue-template').innerHTML;
+    this._template = document.getElementById('item-catalogue-template').innerHTML;
     this._templateFunction = _.template(this._template);
 
-    this._render(this._phones);
+    this._render(this._items);
 
     this._el.addEventListener('click', this._onItemDetailsLinkClick.bind(this));
   }
@@ -17,9 +17,9 @@ class PhoneCatalogue {
     return this._el;
   }
 
-  _render(phones) {
+  _render(items) {
     this._el.innerHTML = this._templateFunction({
-      items: phones
+      items: items
     });
   }
 
@@ -30,18 +30,18 @@ class PhoneCatalogue {
       return;
     }
 
-    let item = link.closest('[data-element="catalogue-item"]');
+    let itemContainer = link.closest('[data-element="item-container"]');
 
-    if (!item) {
+    if (!itemContainer) {
       return;
     }
 
-    this._triggerItemSelectedEvent(item.dataset.itemId);
+    this._triggerItemSelectedEvent(itemContainer.dataset.itemId);
   }
 
-  _triggerItemSelectedEvent(detail) {
-    let event = new CustomEvent("itemSelected", {
-      detail: detail
+  _triggerItemSelectedEvent(itemId) {
+    let event = new CustomEvent('itemSelected', {
+      detail: itemId
     });
 
     this._el.dispatchEvent(event);

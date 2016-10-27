@@ -7,17 +7,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="app.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js"></script>
-  <script src="scripts/phone-viewer.js"></script>
-  <script src="scripts/phone-catalogue.js"></script>
-  <script src="scripts/page-controller.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/lodash/4.16.4/lodash.min.js"></script>
+
+  <script src="scripts/item-viewer.js" defer></script>
+  <script src="scripts/item-catalogue.js" defer></script>
+  <script src="scripts/phone-catalogue-block-controller.js" defer></script>
   <script src="scripts/index.js" defer></script>
 </head>
-<body data-component="page-controller">
+<body>
+  <div data-component="item-catalogue"></div>
 
-  <div data-component="phone-catalogue"></div>
-
-  <div class="js-hidden" data-component="phone-viewer">
+  <div class="js-hidden" data-component="item-viewer">
     <img class="phone" src="img/phones/motorola-xoom-with-wi-fi.0.jpg">
 
     <h1>Motorola XOOM™ with Wi-Fi</h1>
@@ -150,7 +150,7 @@
     </ul>
   </div>
 
-  <script type="text/template" id="phone-catalogue-template">
+  <script type="text/template" id="item-catalogue-template">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-2">
@@ -173,25 +173,23 @@
         <div class="col-md-10">
           <!--Body content-->
 
-          <ul class="phones" data-element="items-container">
-
+          <ul class="phones">
             <% items.forEach(function(item) { %>
 
-              <li class="thumbnail"
-                data-element="catalogue-item"
-                data-item-id="<%= item.id %>">
+            <li class="thumbnail"
+              data-element="item-container"
+              data-item-id="<%= item.id %>">
 
-                <a href="#<%= item.id %>" class="thumb" data-element="item-details-link">
-                  <img alt="<%- item.name %>" src="<%= item.imageUrl %>">
-                </a>
+              <a href="#<%= item.id %>" class="thumb" data-element="item-details-link">
+                <img alt="<%- item.name %>" src="<%= item.imageUrl %>">
+              </a>
 
-                <a href="#<%= item.id %>" data-element="item-details-link"><%- item.name %></a>
+              <a href="#<%= item.id %>" data-element="item-details-link"><%- item.name %></a>
 
-                <p><%- item.snippet %></p>
-              </li>
+              <p><%- item.snippet %></p>
+            </li>
 
             <% }); %>
-
           </ul>
 
         </div>
