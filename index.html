@@ -79,8 +79,12 @@
       </div>
     </form>
 
-    <!--Body content-->
+    <div data-element="items-list-container"></div>
 
+    <!--Body content-->
+  </script>
+
+  <script type="text/template" id="item-catalogue-list-template">
     <ul class="phones list-unstyled">
       <% items.forEach(function(item) { %>
 
@@ -100,6 +104,9 @@
       <% }); %>
     </ul>
   </script>
+
+
+
 
 </body>
 </html>

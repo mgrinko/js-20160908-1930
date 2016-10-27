@@ -9,7 +9,8 @@ class ItemCatalogue extends Component {
     this._template = document.getElementById('item-catalogue-template').innerHTML;
     this._templateFunction = _.template(this._template);
 
-    this._render(this._items);
+    this._render();
+    this._renderItems(this._items);
 
     this._filter = new Filter({
       element: this._el.querySelector('[data-component="filter"]')
@@ -24,6 +25,10 @@ class ItemCatalogue extends Component {
     this._el.innerHTML = this._templateFunction({
       items: items
     });
+  }
+
+  _renderItems() {
+    // ...
   }
 
   _onItemDetailsLinkClick(event) {
