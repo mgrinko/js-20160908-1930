@@ -1,8 +1,9 @@
 'use strict';
 
-class ItemCatalogue {
+class ItemCatalogue extends Component {
   constructor(options) {
-    this._el = options.element;
+    super(options.element);
+
     this._items = options.items;
 
     this._template = document.getElementById('item-catalogue-template').innerHTML;
@@ -11,10 +12,6 @@ class ItemCatalogue {
     this._render(this._items);
 
     this._el.addEventListener('click', this._onItemDetailsLinkClick.bind(this));
-  }
-
-  getElement() {
-    return this._el;
   }
 
   _render(items) {
