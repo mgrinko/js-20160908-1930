@@ -82,11 +82,10 @@ class PhoneCatalogueBlockController {
 
 
     this._phoneCatalogue.getElement().addEventListener('itemSelected', this._onCatalogueItemSelected.bind(this));
+    this._phoneViewer.getElement().addEventListener('back', this._onBackFromPhoneViewer.bind(this));
   }
 
   _onCatalogueItemSelected(event) {
-    alert(event.detail);
-
     let phoneId = event.detail;
     let phoneDetails = this._getPhoneDetails(phoneId);
 
@@ -94,6 +93,11 @@ class PhoneCatalogueBlockController {
 
     this._phoneViewer.render(phoneDetails);
     this._phoneViewer.show();
+  }
+
+  _onBackFromPhoneViewer() {
+    this._phoneViewer.hide();
+    this._phoneCatalogue.show();
   }
 
   _getPhoneDetails() {
